@@ -1,0 +1,12 @@
+import Podcast
+
+type Episode {
+    var id: string
+    var podcast: Podcast
+    var title: string
+    var description: string
+    var duration: int
+    var episodeNumber: int
+    var pubDate: date
+    var audioUrl: url
+}

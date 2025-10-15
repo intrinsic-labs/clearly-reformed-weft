@@ -1,0 +1,7 @@
+
+type ExplainerVideo {
+    var id: string
+    var title: string
+    var description: string
+    var youtubeUrl: url
+}

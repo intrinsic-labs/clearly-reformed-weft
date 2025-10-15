@@ -1,0 +1,23 @@
+{
+  "project_name": "Clearly Reformed Mobile",
+  "weft_sync": true,
+  "weft_version": "0.1.1",
+  "target_implementations": [
+    {
+      "ios": {
+        "ui_framework": "swiftui",
+        "data_persistence": "swiftdata",
+        "translation_guide": [
+          "for observation, use modern @Observable instead of @ObservableObject"
+        ]
+      },
+      "android": {
+        "ui_framework": "jetpack_compose",
+        "data_persistence": "room",
+        "translation_guide": [
+          "for observation, use modern StateFlow instead of LiveData"
+        ]
+      }
+    }
+  ]
+}

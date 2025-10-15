@@ -1,0 +1,7 @@
+
+type ArticleCategory {
+    var id: string
+    var title: string
+    var icon: image
+    var description: string
+}

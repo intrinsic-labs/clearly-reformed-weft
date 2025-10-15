@@ -1,0 +1,18 @@
+import Episode
+
+type Podcast {
+    var id: string
+    var title: string
+    var description: string
+    var author: string
+    var cover: image
+    var episodes: [Episode]
+    
+    func listEpisodes(limit: int = 20) => [Episode] {
+        var cache: [Episode]
+        > fetch episodes sorted by date (recent first)
+        > limit fetch based on the provided limit
+        > load the cache variable with the returned Episodes
+        return cache
+    }
+}
