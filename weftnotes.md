@@ -31,6 +31,51 @@ func fetchPosts() => [Post] {
 Create an `index.weft` file in a directory and put `@Index('directory_name')` at the top. This file will be referenced for general context and insights about the directory contents. Write content in markdown or plain text and use XML tags as desired.
 
 
+### Databases
+
+Weft supports the following annotations for marking database schema definitions: `@Schema, @Entity, @DatabaseModel`. They all accomplish the same task: tell the system that this object is a schema definition for your database.
+
+By default, all properties on any database schema are treated as fields to be stored. Other annotations are available to set properties on schemas:
+
+`@Id`: Marks a field as the primary key. Use `@Id(generated)` to indicate the ID should be auto-generated. 
+
+`@Field`: Marks a property to be stored as a column in the database schema. **By default, all properties on any object marked as a schema will be treated as a field.** You can add the annotation for clarity if desired.
+
+`@Transient, @Exclude, @Ignore, @NotField`: Marks a field to not be stored in the database.
+
+`@ForeignKey("table_name"), @Reference("table_name")`: Marks a field as a foreign key referencing another table.
+
+`@Index`: Marks a field to be indexed for faster queries.
+
+`@Nullable, @Optional`: Marks a field as allowing null values. Alternatively, you can do this in the variable declaration by using a question mark, like `var someField?: string` or `var someField: string?`.
+
+`@Required`: Marks a field as required.
+
+`@Unique`: Marks a field as unique across all records.
+
+```weft
+@Schema
+class AuditLog {
+    @Id(generated)
+    var logId: int
+    
+    @ForeignKey("users")
+    var userId: string
+    
+    var action: string
+    
+    @Index
+    var timestamp: datetime
+    
+    @Nullable
+    var details: object
+    
+    @Ignore
+    var notes: string
+}
+```
+
+
 ## Syntax
 
 ### Value Assignment

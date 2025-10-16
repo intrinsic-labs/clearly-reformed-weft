@@ -1,6 +1,25 @@
 
+import ExplainerVideo
+import Article
+
 enum BookmarkType {
     ARTICLE,
     VIDEO
 }
 
+@Schema
+type Bookmark {
+    @Id(generated)
+    var id: string
+    
+    var type: BookmarkType
+    
+    @Nullable
+    var videoData: ExplainerVideo
+    
+    @Nullable
+    var articleData: Article
+    
+    var notes: string
+    var dateAdded: datetime
+}
