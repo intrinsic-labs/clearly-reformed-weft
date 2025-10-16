@@ -4,4 +4,5 @@ type ExplainerVideo {
     var title: string
     var description: string
     var youtubeUrl: url
+    var thumbnail: image
 }
