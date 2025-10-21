@@ -1,0 +1,43 @@
+// wpengine.weft
+
+import ExplainerVideo
+import Article
+import ENDPOINTS
+
+
+type WPEngine {
+    private(set) var articles: [Article]
+    private(set) var videos: [ExplainerVideo]
+    
+    var isLoading: bool = false
+    var error: Error? = null
+    
+    @Instruction('''
+    Please use good logging throughout these functions
+    for easy initial debugging in target implementations
+    ''')
+    
+    func fetchArticles(offset: int?) async {
+        var pulledAllArticles: bool = false
+        
+        @SumFunc
+        => recursively fetch all articles from ENDPOINTS.ARTICLES.
+           follow the instructions in the ENDPOINTS definition to
+           compare .ARTICLES with .POSTS to get full article content
+           for *only* posts that are listed with the articles
+        => parse into Article objects
+        => load self.articles with all the articles that come back
+    }
+    
+    func fetchVideos() async {
+        @SumFunc
+        => fetch all explainer videos from ENDPOINTS.VIDEOS
+        => parse into ExplainerVideo objects
+        => load self.videos with all the videos
+    }
+    
+    func clearCache() {
+        self.articles = []
+        self.videos = []
+    }
+}
