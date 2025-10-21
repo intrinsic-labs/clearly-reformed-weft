@@ -1,6 +1,10 @@
 // app.weft
 
-class ClearlyReformed: App {
+import WPEngine
+
+@Main
+class ClearlyReformed {
+    @State var wpEngine = WPEngine()
      
      init() {
          super.init()

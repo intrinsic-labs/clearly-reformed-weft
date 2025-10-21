@@ -22,5 +22,17 @@ view VideoCard {
                 saturation: 0
             }
         }
+
+        Text(video.title) {
+            font: h2
+            alignment: left
+        }
+
+        Text(video.description) {
+            font: body
+            alignment: left
+            maxLines: 3
+            ellipsize: end
+        }
     }
 }

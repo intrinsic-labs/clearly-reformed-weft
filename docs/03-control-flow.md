@@ -197,7 +197,7 @@ Use `static` to define class-level (rather than instance-level) properties and m
 class MathUtils {
     static let PI = 3.14159
     static let E = 2.71828
-    
+
     static func max(a: int, b: int) => int {
         return a > b ? a : b
     }
@@ -211,7 +211,7 @@ class User {
     static var userCount: int = 0    // shared across all instances
     var id: string                   // unique to each instance
     var name: string
-    
+
     func init(name: string) {
         self.name = name
         User.userCount += 1          // increment shared counter

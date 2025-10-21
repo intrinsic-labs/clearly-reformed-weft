@@ -67,6 +67,24 @@ enum SomeEnum: string {
 
 Weft provides multiple keywords to define scope and structure. Use whichever feels most natural for your context — Weft's flexible syntax accepts various approaches, and the translator (whether human or model) will use context and annotations to implement correctly for the target platform.
 
+### Scope
+You can use curly braces `{ }` to define scope (like C-based languages) or indentation (like Python). Both are acceptable, even in the same file. Semicolons are optional.
+
+```weft
+func doSomething() => void {
+    // scoped with braces
+    var x = 10
+    var y = 20
+    return x + y;
+}
+
+def doSomethingElse:
+    // scoped with indentation
+    var x = 10
+    var y = 20
+    return x + y
+```
+
 ### Primary Keywords
 
 1. **`type`** - General-purpose keyword for quickly defining custom types/objects. The translator uses context and annotations to determine the best implementation (class, struct, interface, etc.) for the target platform. Use this when you want flexibility and don't need to specify exact implementation details.

@@ -5,6 +5,7 @@ import Article
 import ENDPOINTS
 
 
+@Observed
 object WPEngine {
     private(set) var articles: [Article]
     private(set) var videos: [ExplainerVideo]
