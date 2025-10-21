@@ -1,0 +1,38 @@
+// articleCard.weft
+
+import Article
+
+view ArticleCard {
+    var article: Article
+    
+    Column(
+        onTap: navigateTo(ArticleDetailView(article: article)
+        cornerRadius: 20
+    ) {
+    
+        Image(article.coverImage) {
+            width: full
+            height: 200
+            scaleType: centerCrop
+            bottomPadding: 8
+        }
+        
+        Column(
+            verticalPadding: 16
+            spacing: 8
+        ) {
+        
+            Text(article.title) {
+                font: h2
+                alignment: left
+            }
+            
+            Text(article.excerpt) {
+                font: body
+                alignment: left
+                maxLines: 3
+                ellipsize: end
+            }
+        }
+    }
+}

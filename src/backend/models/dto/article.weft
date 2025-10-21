@@ -2,7 +2,8 @@
 
 import ArticleCategory
 
-type Article {
+@JSON
+data Article {
     let id: string
     let title: string
     let datePublished: date

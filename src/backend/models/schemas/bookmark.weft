@@ -9,7 +9,7 @@ enum BookmarkType {
 }
 
 @Schema
-type Bookmark {
+struct Bookmark {
     @Id(generated)
     var id: string
 

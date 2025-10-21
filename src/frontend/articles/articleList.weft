@@ -1,0 +1,25 @@
+// articleList.weft
+
+import Article
+import ArticleCard
+
+view ArticleList {
+    @Environment var artciles: [Article]
+
+    Column(
+        isScrollable: true
+        scrollIndicator: hidden
+        spacing: 8
+        onRefresh: this.refresh()
+    ) {
+        for article in articles {
+            ArticleCard(article: article)
+        }
+    }
+
+    fun refresh() async {
+        @SumFunc
+        => reload all articles from WPEngine
+        => properly update the view to reflect any changes
+    }
+}

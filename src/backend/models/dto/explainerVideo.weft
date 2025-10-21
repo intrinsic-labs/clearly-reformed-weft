@@ -1,6 +1,7 @@
 // explainerVideo.weft
 
-type ExplainerVideo {
+@JSON
+data ExplainerVideo {
     var id: string
     var title: string
     var description: string

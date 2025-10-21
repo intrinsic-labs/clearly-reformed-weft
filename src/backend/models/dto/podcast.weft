@@ -2,7 +2,8 @@
 
 import Episode
 
-type Podcast {
+@JSON
+struct Podcast {
     var id: string
     var title: string
     var description: string

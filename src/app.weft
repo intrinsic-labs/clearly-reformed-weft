@@ -1,0 +1,8 @@
+// app.weft
+
+class ClearlyReformed: App {
+     
+     init() {
+         super.init()
+     }
+}

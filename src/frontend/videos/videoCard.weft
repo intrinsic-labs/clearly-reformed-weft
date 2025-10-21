@@ -1,0 +1,26 @@
+// videoCard.weft
+
+import ExplainerVideo
+
+view VideoCard {
+    var video: ExplainerVideo
+
+    Column(
+
+    ) {
+        ZStack {
+            @Instruction('''
+            try to create a layered effect here where
+            the lower image is totally blurred out and
+            makes a nice backdrop for the top image
+            ''')
+            Image(video.thumbnail) {
+                blurRadius: 60
+                saturation: 150
+            }
+            Image(video.thumbnail) {
+                saturation: 0
+            }
+        }
+    }
+}
