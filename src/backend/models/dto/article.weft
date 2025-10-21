@@ -1,3 +1,5 @@
+// article.weft
+
 import ArticleCategory
 
 type Article {
@@ -6,8 +8,8 @@ type Article {
     let datePublished: date
     let excerpt: string
     let url: url
-    
-    // API returns two image fields: 
+
+    // API returns two image fields:
     // featured_image_url
     // mobile_featured_image
     // The mobile_featured_image should be
@@ -15,5 +17,5 @@ type Article {
     // can be the fallback
     let coverImage: image
     let renderedContent: string // this will be rendered HTML from the WordPress API
-    let category: ArticleCategory 
+    let category: ArticleCategory
 }

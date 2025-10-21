@@ -1,3 +1,5 @@
+// podcast.weft
+
 import Episode
 
 type Podcast {
@@ -7,7 +9,7 @@ type Podcast {
     var author: string
     var cover: image
     var episodes: [Episode]
-    
+
     func listEpisodes(limit: int = 20) => [Episode] {
         var cache: [Episode]
         @SumFunc

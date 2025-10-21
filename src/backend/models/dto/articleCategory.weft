@@ -1,3 +1,4 @@
+// articleCategory.weft
 
 type ArticleCategory {
     var id: string

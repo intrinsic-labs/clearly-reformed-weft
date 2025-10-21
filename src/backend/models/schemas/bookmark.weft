@@ -1,3 +1,4 @@
+// bookmark.weft
 
 import ExplainerVideo
 import Article
@@ -11,15 +12,15 @@ enum BookmarkType {
 type Bookmark {
     @Id(generated)
     var id: string
-    
+
     var type: BookmarkType
-    
+
     @Nullable
     var videoData: ExplainerVideo
-    
+
     @Nullable
     var articleData: Article
-    
+
     var notes: string
     var dateAdded: datetime
 }

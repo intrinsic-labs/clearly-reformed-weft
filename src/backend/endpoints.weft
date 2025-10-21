@@ -1,10 +1,12 @@
+// endpoints.weft
+
 object ENDPOINTS {
     // base url for WordPress API
     private let BASE_URL = "https://control.kdy.org/wp-json/"
-    
+
     @Instruction('''
     Two-Step Approach to only use posts from the articles endpoint:
-    
+
     1. Get the list from the custom endpoint:
     curl -X GET "https://control.kdy.org/wp-json/cr/v1/articles?per_page=10"
     -H "User-Agent: Mozilla/5.0"
@@ -13,7 +15,7 @@ object ENDPOINTS {
     3. Fetch full content using that slug:
     curl -X GET "https://control.kdy.org/wp-json/wp/v2/posts?slug={slug}" -H
     "User-Agent: Mozilla/5.0"
-    
+
     The slug is just the last part of the URL path from the custom endpoint.
     This way you:
     - Only display articles that appear in the custom /cr/v1/articles endpoint
@@ -21,11 +23,11 @@ object ENDPOINTS {
     standard WordPress API
     ''')
 
-    
+
     let ARTICLES = self.BASE_URL + "cr/v1/articles"
     let POSTS = self.BASE_URL + "wp/v2/posts"
     let VIDEOS = self.BASE_URL + "/wp/v2/explainer-video"
-    
+
     // Podcast RSS feed url
     let PODCAST_RSS_FEED = "https://media.rss.com/lbe/feed.xml"
 }
