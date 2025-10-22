@@ -1,12 +1,14 @@
 // app.weft
 
 import WPEngine
+import MainView
 
 @Main
-class ClearlyReformed {
-    @State var wpEngine = WPEngine()
-     
-     init() {
-         super.init()
-     }
+class ClearlyReformed: App {
+  @State var wpEngine = WPEngine()
+
+  var content: View = {
+    MainView() {
+      environment: [wpEngine]
+  }
 }
