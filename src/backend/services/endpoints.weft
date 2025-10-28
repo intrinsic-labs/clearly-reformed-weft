@@ -26,7 +26,8 @@ object ENDPOINTS {
 
     let ARTICLES = self.BASE_URL + "cr/v1/articles"
     let POSTS = self.BASE_URL + "wp/v2/posts"
-    let VIDEOS = self.BASE_URL + "/wp/v2/explainer-video"
+    let VIDEOS = self.BASE_URL + "wp/v2/explainer-video"
+    let MEDIA = self.BASE_URL + "wp/v2/media"
 
     // Podcast RSS feed url
     let PODCAST_RSS_FEED = "https://media.rss.com/lbe/feed.xml"

@@ -1,0 +1,19 @@
+
+import ENDPOINTS
+
+@Service
+struct WPHelper {
+
+  enum MediaSize {
+    MEDIUM,
+    LARGE,
+    THUMBNAIL,
+    FULL
+  }
+  
+  def getMediaById(id: int, size: MediaSize = .LARGE) {
+    let endpoint = ENDPOINTS.MEDIA
+    @SumFunc
+    => fetch the image
+  }
+}

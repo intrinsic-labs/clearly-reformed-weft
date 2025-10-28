@@ -1,0 +1,36 @@
+// ArticleTabView.weft
+
+import ArticleCard
+
+view ArticleList {
+  @Environment var wpRepo: WPRepository
+  @State var showingAlert = false
+  @State var error: Error? = null
+
+  Column(
+    isScrollable: true
+    scrollIndicator: hidden
+    spacing: 8
+    onRefresh: this.refresh()
+  ) {
+
+    for article in wpRepo.articles {
+        ArticleCard(article: article)
+    }
+    .alert(
+      isPresented: $showingAlert
+      title: "Error Fetching Articles"
+      message: this.error.shortDescription
+      button: Button("OK", action: dismiss())
+    )
+  }
+
+  fun refresh() async {
+    try {
+      await wpRepo.fetchArticles()
+    } catch {
+      this.error = error
+      showingAlert = true
+    }
+  }
+}

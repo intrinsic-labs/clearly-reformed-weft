@@ -1,0 +1,29 @@
+
+
+view YouTubePlayer {
+  let url: url
+  var thumbnail: image? = null
+
+  @Instruction('''
+  Here we just need to load the iframe YouTube player.
+  Here are the docs on this:
+  https://developers.google.com/youtube/iframe_api_reference
+  https://developers.google.com/youtube/player_parameters
+  I think for both Android and iOS, we should just wrap
+  this in a webview the size of the video so it can be
+  used kind of like the native video player on each
+  platform.
+
+  Make sure to retain basic player controls - play pause,
+  seek, etc.
+
+  If a thumbnail image is passed in, it should be used as
+  the video player thumbnail with a play button overlay.
+  On tap, it should disappear and be replaced by the
+  iframe youtube player.
+  ''')
+
+  WebView {
+    // implementation here
+  }
+}

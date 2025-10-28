@@ -1,0 +1,21 @@
+
+import ExplainerVideo
+import YouTubePlayer
+import AppTheme
+
+view VideoDetailView() {
+  var video: ExplainerVideo
+
+  Column(isScrollable: true) {
+
+    YouTubePlayer(url: video.youtubeUrl, image: video.thumbnail)
+    
+    Text(video.title) {
+      font: AppTheme.fonts.title
+      fontSize: h3
+      padding: bottom, 4
+    }
+    
+    Text
+  }
+}

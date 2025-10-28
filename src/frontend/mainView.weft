@@ -1,0 +1,44 @@
+
+import AppTheme
+
+enum AppTab {
+  ARTICLES,
+  VIDEOS,
+  PODCAST,
+  CDPC,
+  NOTEBOOK
+}
+
+view MainView {
+  @State var currentTab: AppTab = .ARTICLES
+
+  TabView {
+
+    Tab("Articles", icon: AppTheme.icons.articles) {
+      id: AppTab.ARTICLES,
+      content: ArticleTabView()
+    }
+
+
+    Tab("Videos", icon: AppTheme.icons.videos) {
+      id: AppTab.VIDEOS,
+      content: VideoTabView()
+    }
+
+    Tab("Podcast", icon: AppTheme.icons.podcast) {
+      id: AppTab.PODCAST,
+      content: PodcastView()
+    }
+
+    Tab("CDPC", icon: AppTheme.icons.cdpc) {
+      id: AppTab.CDPC,
+      content: CDPCTabView()
+    }
+
+    Tab("Notebook", icon: AppTheme.icons.notebook) {
+      id: AppTab.Notebook,
+      content: NotebookTabView()
+    }
+
+  }
+}

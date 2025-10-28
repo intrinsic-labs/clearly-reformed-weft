@@ -3,8 +3,146 @@
 @JSON
 data ExplainerVideo {
     var id: string
+
+    @JSONKey("title.rendered")
     var title: string
-    var description: string
+    
+    @JSONKey("acf.display_date")
+    var date: date
+
+    @JSONKey("excerpt.rendered")
+    var excerpt: string
+
+    @JSONKey("conent.rendered")
+    var content: string
+
+    @JSONKey("acf.video_embed")
     var youtubeUrl: url
+
     var thumbnail: image
+
+    @Instruction('''
+    Below is a response from the API;
+    anything you see coming back in addition to the shape
+    below can be ignored. Obviously we don't need any
+    of the SEO stuff; there's a lot we don't need,
+    just showing you what will be present. Use the 
+    JSONKey annotations above as hints for which fields to
+    use for what.
+
+    <example-response>
+    {
+    "id": 38313,
+    "date": "2025-08-27T05:00:00",
+    "date_gmt": "2025-08-27T10:00:00",
+    "guid": {
+      "rendered": "https://control.kdy.org/?post_type=explainer-video&#038;p=38313"
+    },
+    "modified": "2025-08-27T09:49:30",
+    "modified_gmt": "2025-08-27T14:49:30",
+    "slug": "attributes-of-power",
+    "status": "publish",
+    "type": "explainer-video",
+    "link": "https://control.kdy.org/explainer-video/attributes-of-power/",
+    "title": {
+      "rendered": "Attributes of Power"
+    },
+    "content": {
+      "rendered": "\n<p>Many people have heard of the &#8220;three omnis&#8221; when it comes to describing the character of God; that God is omniscient—there is nothing he does not know. God is omnipresent—there is nowhere he cannot be, and God is omnipotent—there is nothing he cannot do. That&#8217;s what I want to talk about here: God&#8217;s <em>omnipotence</em>, his power.</p>\n\n\n\n<p>We&#8217;re thinking about this broad category of God&#8217;s <em>communicable</em>...,
+      "protected": false
+    },
+    "excerpt": {
+      "rendered": "<p>When we think about the power of God, the sovereignty of God, we should not conclude, therefore, that God is too great to care, but rather that he is too great to fail.</p>\n",
+      "protected": false
+    },
+    "featured_media": 38318,
+    "template": "",
+    "meta": {
+      "_acf_changed": false
+    },
+    "associated_people": [
+      692
+    ],
+    "video-series": [
+      550
+    ],
+    "class_list": [
+      "post-38313",
+      "explainer-video",
+      "type-explainer-video",
+      "status-publish",
+      "has-post-thumbnail",
+      "hentry",
+      "associated_people-kevin-deyoung",
+      "video-series-the-attributes-of-god"
+    ],
+    "acf": {
+      "source_url": "",
+      "audioFile": "",
+      "video_embed": "https://youtu.be/q8pl-2IaBUs",
+      "display_date": "20250827",
+      "poster_image": 38315,
+      "hover_gif": 38316,
+      "video_background_color": ""
+    },
+    "yoast_head": "<!-- This site is optimized with the Yoast SEO plugin v26.2 - https://yoast.com/wordpress/plugins/seo/ -->\n<title>Attributes...,
+    "yoast_head_json": {
+      "title": "Attributes of Power - Clearly Reformed",
+      "description": "Kevin DeYoung walks through the last communicable attribute, God's attributes of power, finishing the series on the ..."
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://control.kdy.org/wp-json/wp/v2/explainer-video/38313",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://control.kdy.org/wp-json/wp/v2/explainer-video"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://control.kdy.org/wp-json/wp/v2/types/explainer-video"
+        }
+      ],
+      "wp:featuredmedia": [
+        {
+          "embeddable": true,
+          "href": "https://control.kdy.org/wp-json/wp/v2/media/38318"
+        }
+      ],
+      "wp:attachment": [
+        {
+          "href": "https://control.kdy.org/wp-json/wp/v2/media?parent=38313"
+        }
+      ],
+      "wp:term": [
+        {
+          "taxonomy": "associated_people",
+          "embeddable": true,
+          "href": "https://control.kdy.org/wp-json/wp/v2/associated_people?post=38313"
+        },
+        {
+          "taxonomy": "video-series",
+          "embeddable": true,
+          "href": "https://control.kdy.org/wp-json/wp/v2/video-series?post=38313"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+    </example-response>
+    ''')
 }

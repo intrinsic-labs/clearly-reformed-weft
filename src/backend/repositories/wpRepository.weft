@@ -1,0 +1,54 @@
+// wpengine.weft
+
+import ExplainerVideo
+import Article
+import ENDPOINTS
+
+@Singleton
+@Observable
+@Repository
+class WPRepository {
+    private(set) var articles: [Article]
+    private(set) var videos: [ExplainerVideo]
+
+    var loadingArticles: bool = false
+    var loadingVideos: bool = false
+    var error: Error? = null
+
+    @Instruction('''
+    Please use good logging throughout these functions
+    for easy initial debugging in target implementations
+    ''')
+
+    func fetchArticles(offset: int?) async throws {
+      loadingArticles = true
+
+      @SumFunc
+      => recursively fetch all articles from ENDPOINTS.ARTICLES.
+         follow the instructions in the ENDPOINTS definition to
+         compare .ARTICLES with .POSTS to get full article content
+         for *only* posts that are listed with the articles
+      => parse into Article objects
+      => load self.articles with all the articles that come back
+      => if there's an error, update self.error with it
+
+      loadingArticles = false
+    }
+
+    func fetchVideos(offset: int?) async throws {
+      loadingVideos = true
+
+      @SumFunc
+      => recursively fetch all explainer videos from ENDPOINTS.VIDEOS
+      => parse into ExplainerVideo objects
+      => load self.videos with all the videos
+      => if there's an error, update self.error with it
+
+      loadingVideos = false
+    }
+
+    func clearCache() {
+        self.articles = []
+        self.videos = []
+    }
+}

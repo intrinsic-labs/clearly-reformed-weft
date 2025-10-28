@@ -1,0 +1,35 @@
+
+
+view VideoTabView {
+  @Environment var wpRepo: WPRepository
+  @State var showingAlert = false
+  @State var error: Error? = null
+
+  Column(
+    isScrollable: true
+    scrollIndicator: hidden
+    spacing: 8
+    onRefresh: this.refresh()
+  ) {
+
+    for video in wpRepo.videos {
+      VideoCard(video: video)
+    }
+    .alert(
+      isPresented: $showingAlert
+      title: "Error Fetching Videos"
+      message: this.error.shortDescription
+      button: Button("OK", action: dismiss())
+    )
+  }
+
+  fun refresh() {
+    try {
+      await wpRepo.fetchVideos()
+    } catch {
+      this.error = error
+      this.showingAlert.toggle()
+    }
+  }
+
+}
