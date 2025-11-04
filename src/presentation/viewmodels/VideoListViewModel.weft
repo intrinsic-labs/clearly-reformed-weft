@@ -1,0 +1,81 @@
+// VideoListViewModel.weft
+
+import WPRepository
+import CacheService
+import ExplainerVideo
+
+@Observable
+@ViewModel
+@ViewScoped
+class VideoListViewModel {
+    private var repository: WPRepository
+    private var cacheService: CacheService
+
+    @State var videos: [ExplainerVideo] = []
+    @State var isLoading: bool = false
+    @State var errorMessage: string? = null
+
+    init(repository: WPRepository, cacheService: CacheService) {
+        this.repository = repository
+        this.cacheService = cacheService
+    }
+
+    @Instruction('''
+    VideoListViewModel coordinates between the Repository and the View.
+
+    Responsibilities:
+    - Fetch videos from repository
+    - Manage loading and error states for the view
+    - Transform repository data into presentation-ready state
+    - Cache videos when they're viewed/loaded
+    - Provide clean API for view interactions
+    ''')
+
+    func loadVideos(offset: int? = null) async {
+        isLoading = true
+        errorMessage = null
+
+        try {
+            await repository.fetchVideos(offset: offset)
+            videos = repository.videos
+
+            // Cache all loaded videos for offline access
+            await this.cacheLoadedVideos()
+
+        } catch error {
+            errorMessage = error.localizedDescription
+        }
+
+        isLoading = false
+    }
+
+    func refresh() async {
+        await this.loadVideos()
+    }
+
+    func cacheVideo(video: ExplainerVideo) async {
+        try {
+            await cacheService.cacheVideo(video)
+        } catch error {
+            // Log error but don't show to user - caching is background operation
+            @SumFunc
+            => log caching error for debugging
+        }
+    }
+
+    private func cacheLoadedVideos() async {
+        for video in videos {
+            await this.cacheVideo(video)
+        }
+    }
+
+    // Computed property for view to check if there are videos
+    var hasVideos: bool {
+        return !videos.isEmpty
+    }
+
+    // Computed property for error display
+    var hasError: bool {
+        return errorMessage != null
+    }
+}

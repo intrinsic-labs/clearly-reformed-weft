@@ -1,14 +1,47 @@
 // app.weft
 
 import WPRepository
+import CacheService
+import ArticleListViewModel
+import VideoListViewModel
 import MainView
 
 @Main
 class ClearlyReformed: App {
-  @State var wpRepo = WPRepository() // singleton instantiation
+  // Singleton services
+  @State var database = Database()
+  @State var wpRepository = WPRepository()
+  @State var cacheService = CacheService(database: database)
 
-  var content: View = {
-    MainView() {
-      environment: [wpRepo]
+  // ViewScoped ViewModels - created for each view
+  @State var articleViewModel = ArticleListViewModel(
+    repository: wpRepository,
+    cacheService: cacheService
+  )
+
+  @State var videoViewModel = VideoListViewModel(
+    repository: wpRepository,
+    cacheService: cacheService
+  )
+
+  @Instruction('''
+  App entry point following clean architecture:
+
+  Dependency hierarchy:
+  1. Database - singleton storage layer
+  2. CacheService - manages offline content (depends on Database)
+  3. WPRepository - fetches data from API (singleton)
+  4. ViewModels - coordinate between repository and views
+  5. Views - presentation layer
+
+  ViewModels are injected into MainView and passed down to child views.
+  This maintains clean separation: Views -> ViewModels -> Repositories -> API
+  ''')
+
+  var content: View {
+    MainView(
+      articleViewModel: articleViewModel,
+      videoViewModel: videoViewModel
+    )
   }
 }

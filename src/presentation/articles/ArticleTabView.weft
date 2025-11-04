@@ -1,11 +1,10 @@
 // ArticleTabView.weft
 
 import ArticleCard
+import ArticleListViewModel
 
-view ArticleList {
-  @Environment var wpRepo: WPRepository
-  @State var showingAlert = false
-  @State var error: Error? = null
+view ArticleTabView {
+  var viewModel: ArticleListViewModel
 
   Column(
     isScrollable: true
@@ -14,23 +13,27 @@ view ArticleList {
     onRefresh: this.refresh()
   ) {
 
-    for article in wpRepo.articles {
+    if viewModel.isLoading {
+      LoadingSpinner()
+    } else if viewModel.hasArticles {
+      for article in viewModel.articles {
         ArticleCard(article: article)
+      }
+    } else if viewModel.hasError {
+      ErrorView(message: viewModel.errorMessage)
     }
-    .alert(
-      isPresented: $showingAlert
-      title: "Error Fetching Articles"
-      message: this.error.shortDescription
-      button: Button("OK", action: dismiss())
-    )
+  }
+  .alert(
+    isPresented: viewModel.hasError
+    title: "Error Fetching Articles"
+    message: viewModel.errorMessage ?? "An unknown error occurred"
+    button: Button("OK", action: dismiss())
+  )
+  .onAppear {
+    await viewModel.loadArticles()
   }
 
-  fun refresh() async {
-    try {
-      await wpRepo.fetchArticles()
-    } catch {
-      this.error = error
-      showingAlert = true
-    }
+  func refresh() async {
+    await viewModel.refresh()
   }
 }

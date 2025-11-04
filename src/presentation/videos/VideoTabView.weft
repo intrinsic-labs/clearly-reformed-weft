@@ -1,9 +1,10 @@
+// VideoTabView.weft
 
+import VideoCard
+import VideoListViewModel
 
 view VideoTabView {
-  @Environment var wpRepo: WPRepository
-  @State var showingAlert = false
-  @State var error: Error? = null
+  var viewModel: VideoListViewModel
 
   Column(
     isScrollable: true
@@ -12,24 +13,27 @@ view VideoTabView {
     onRefresh: this.refresh()
   ) {
 
-    for video in wpRepo.videos {
-      VideoCard(video: video)
-    }
-    .alert(
-      isPresented: $showingAlert
-      title: "Error Fetching Videos"
-      message: this.error.shortDescription
-      button: Button("OK", action: dismiss())
-    )
-  }
-
-  fun refresh() {
-    try {
-      await wpRepo.fetchVideos()
-    } catch {
-      this.error = error
-      this.showingAlert.toggle()
+    if viewModel.isLoading {
+      LoadingSpinner()
+    } else if viewModel.hasVideos {
+      for video in viewModel.videos {
+        VideoCard(video: video)
+      }
+    } else if viewModel.hasError {
+      ErrorView(message: viewModel.errorMessage)
     }
   }
+  .alert(
+    isPresented: viewModel.hasError
+    title: "Error Fetching Videos"
+    message: viewModel.errorMessage ?? "An unknown error occurred"
+    button: Button("OK", action: dismiss())
+  )
+  .onAppear {
+    await viewModel.loadVideos()
+  }
 
+  func refresh() async {
+    await viewModel.refresh()
+  }
 }

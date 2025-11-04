@@ -1,8 +1,5 @@
 // bookmark.weft
 
-import ExplainerVideo
-import Article
-
 enum BookmarkType {
     ARTICLE,
     VIDEO
@@ -15,12 +12,43 @@ struct Bookmark {
 
     var type: BookmarkType
 
-    @Nullable
-    var videoData: ExplainerVideo
+    // Reference to cached content by ID
+    var contentId: string
+
+    // Denormalized fields for quick display (resilient to cache deletion)
+    var title: string
 
     @Nullable
-    var articleData: Article
+    var thumbnailUrl: url?
 
+    // User-specific metadata
     var notes: string
     var dateAdded: datetime
+
+    @Nullable
+    var lastViewedAt: datetime?
+
+    @Instruction('''
+    Bookmark stores metadata about user-bookmarked content.
+
+    Design Philosophy:
+    - Bookmarks reference cached content by ID (contentId)
+    - Denormalizes title and thumbnailUrl for fast list display
+    - Even if cached content is deleted, bookmark list still shows
+    - Full content is fetched from CachedArticle or CachedVideo when needed
+
+    Usage Flow:
+    1. User bookmarks an article/video
+    2. Full content saved to CachedArticle/CachedVideo
+    3. Bookmark created with reference to cache ID
+    4. Bookmark list shows title + thumbnail (no database join needed)
+    5. When user opens bookmark, fetch from cache by contentId
+    6. If cache missing, show degraded state or re-fetch from API
+
+    This separation allows:
+    - Cache to be refreshed independently
+    - Bookmarks to survive cache purges
+    - Single source of truth for offline content
+    - Clean architecture with minimal coupling
+    ''')
 }

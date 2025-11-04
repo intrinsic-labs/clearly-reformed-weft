@@ -7,15 +7,14 @@ import Article
 import ENDPOINTS
 
 @Singleton
-@Observable
 @Repository
 class WPRepository {
-    private(set) var articles: [Article]
-    private(set) var videos: [ExplainerVideo]
+    var articles: [Article] = []
+    var videos: [ExplainerVideo] = []
 
-    var loadingArticles: bool = false
-    var loadingVideos: bool = false
-    var error: Error? = null
+    private var loadingArticles: bool = false
+    private var loadingVideos: bool = false
+    private var error: Error? = null
 
     @Instruction('''
     Please use good logging throughout these functions

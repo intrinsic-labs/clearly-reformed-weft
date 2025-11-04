@@ -1,6 +1,5 @@
 // articleCategory.weft
 
-@JSON
 data ArticleCategory {
     var id: string
     var title: string

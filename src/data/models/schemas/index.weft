@@ -1,1 +1,24 @@
 @Index('schemas')
+
+// Database schemas for local storage
+
+// Bookmarks - User-saved content references
+export Bookmark from './bookmark'
+
+// Cache - Offline content storage
+export CachedArticle from './cachedArticle'
+export CachedVideo from './cachedVideo'
+
+@Instruction('''
+Schemas represent database tables for local persistence.
+
+Organization:
+- Bookmark: User metadata (what they've saved, notes, etc.)
+- CachedArticle/CachedVideo: Full content for offline access
+
+The separation allows:
+- Bookmarks to reference cached content by ID
+- Cache to be managed independently (refresh, prune, etc.)
+- Single source of truth for offline content
+- Minimal coupling between user metadata and content storage
+''')

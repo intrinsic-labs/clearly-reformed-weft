@@ -1,4 +1,9 @@
+// mainView.weft
 
+import ArticleTabView
+import VideoTabView
+import ArticleListViewModel
+import VideoListViewModel
 import AppTheme
 
 enum AppTab {
@@ -10,19 +15,29 @@ enum AppTab {
 }
 
 view MainView {
+  var articleViewModel: ArticleListViewModel
+  var videoViewModel: VideoListViewModel
+
   @State var currentTab: AppTab = .ARTICLES
+
+  @Instruction('''
+  MainView is the root view of the app with tab navigation.
+
+  It receives ViewModels from the App level and passes them down to child views.
+  This maintains clean architecture: MainView acts as a coordinator that connects
+  ViewModels to their respective views.
+  ''')
 
   TabView {
 
     Tab("Articles", icon: AppTheme.icons.articles) {
       id: AppTab.ARTICLES,
-      content: ArticleTabView()
+      content: ArticleTabView(viewModel: articleViewModel)
     }
-
 
     Tab("Videos", icon: AppTheme.icons.videos) {
       id: AppTab.VIDEOS,
-      content: VideoTabView()
+      content: VideoTabView(viewModel: videoViewModel)
     }
 
     Tab("Podcast", icon: AppTheme.icons.podcast) {
@@ -36,7 +51,7 @@ view MainView {
     }
 
     Tab("Notebook", icon: AppTheme.icons.notebook) {
-      id: AppTab.Notebook,
+      id: AppTab.NOTEBOOK,
       content: NotebookTabView()
     }
 

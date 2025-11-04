@@ -1,0 +1,161 @@
+// cacheService.weft
+
+import CachedArticle
+import CachedVideo
+import Article
+import ExplainerVideo
+
+@Service
+@Singleton
+class CacheService {
+    private var database: Database
+
+    init(database: Database) {
+        this.database = database
+    }
+
+    @Instruction('''
+    CacheService manages offline content storage.
+
+    Responsibilities:
+    - Save articles and videos to local cache
+    - Retrieve cached content by ID
+    - Manage cache size and pruning
+    - Track cache metadata (last updated, etc.)
+    ''')
+
+    // MARK: - Article Cache
+
+    func cacheArticle(article: Article) async {
+        var cached = CachedArticle(
+            id: article.id,
+            title: article.title,
+            excerpt: article.excerpt,
+            url: article.url,
+            coverImage: article.coverImage,
+            date: article.date,
+            renderedContent: article.renderedContent ?? "",
+            sourceUrl: article.sourceUrl,
+            cachedAt: now(),
+            lastUpdated: now()
+        )
+
+        @SumFunc
+        => save cached article to database
+        => if article already exists, update it
+        => log success or failure
+    }
+
+    func getCachedArticle(id: string) async => CachedArticle? {
+        @SumFunc
+        => query database for cached article by id
+        => return cached article if found, null otherwise
+    }
+
+    func getAllCachedArticles() async => [CachedArticle] {
+        @SumFunc
+        => query database for all cached articles
+        => order by lastUpdated descending
+        => return list of cached articles
+    }
+
+    func removeCachedArticle(id: string) async {
+        @SumFunc
+        => delete cached article from database by id
+        => log success or failure
+    }
+
+    // MARK: - Video Cache
+
+    func cacheVideo(video: ExplainerVideo) async {
+        var cached = CachedVideo(
+            id: video.id,
+            title: video.title,
+            description: video.description,
+            content: video.content,
+            youtubeUrl: video.youtubeUrl,
+            date: video.date,
+            posterImageId: video.posterImageId,
+            hoverGifId: video.hoverGifId,
+            videoBackgroundColor: video.videoBackgroundColor,
+            cachedAt: now(),
+            lastUpdated: now()
+        )
+
+        @SumFunc
+        => save cached video to database
+        => if video already exists, update it
+        => log success or failure
+    }
+
+    func getCachedVideo(id: string) async => CachedVideo? {
+        @SumFunc
+        => query database for cached video by id
+        => return cached video if found, null otherwise
+    }
+
+    func getAllCachedVideos() async => [CachedVideo] {
+        @SumFunc
+        => query database for all cached videos
+        => order by lastUpdated descending
+        => return list of cached videos
+    }
+
+    func removeCachedVideo(id: string) async {
+        @SumFunc
+        => delete cached video from database by id
+        => log success or failure
+    }
+
+    // MARK: - Cache Management
+
+    func getCacheSize() async => int {
+        @SumFunc
+        => calculate total size of cached content in bytes
+        => include both articles and videos
+        => return total size
+    }
+
+    func pruneOldCache(olderThan: duration) async {
+        @SumFunc
+        => find cached articles older than the specified duration
+        => find cached videos older than the specified duration
+        => delete old cached content
+        => log how many items were removed
+    }
+
+    func pruneCacheToSize(maxSizeBytes: int) async {
+        @SumFunc
+        => calculate current cache size
+        => if over limit, remove least recently used items until under limit
+        => prioritize keeping bookmarked content (check Bookmark table)
+        => log pruning results
+    }
+
+    func clearAllCache() async {
+        @SumFunc
+        => delete all cached articles from database
+        => delete all cached videos from database
+        => log success
+    }
+
+    // MARK: - Utility
+
+    func isCached(contentId: string, type: BookmarkType) async => bool {
+        if type == BookmarkType.ARTICLE {
+            var cached = await this.getCachedArticle(contentId)
+            return cached != null
+        } else {
+            var cached = await this.getCachedVideo(contentId)
+            return cached != null
+        }
+    }
+
+    func refreshCachedContent(contentId: string, type: BookmarkType, freshContent: Article | ExplainerVideo) async {
+        @SumFunc
+        => update the cached content with fresh data from API
+        => update lastUpdated timestamp
+        => keep original cachedAt timestamp
+        => log refresh success
+    }
+}

@@ -1,0 +1,24 @@
+@Index('viewmodels')
+
+// ViewModels coordinate between repositories and views
+
+export ArticleListViewModel from './ArticleListViewModel'
+export VideoListViewModel from './VideoListViewModel'
+
+@Instruction('''
+ViewModels are the observable presentation layer in clean architecture.
+
+Responsibilities:
+- Coordinate between repositories/services and views
+- Manage presentation state (@State properties)
+- Handle loading and error states
+- Transform domain models into view-ready data
+- Provide clean API for view interactions
+
+ViewModels are typically @ViewScoped and marked with @Observable
+so views can react to state changes.
+
+Following the pattern:
+View → ViewModel → Repository → DTO → API
+     ↑ @Observable
+''')

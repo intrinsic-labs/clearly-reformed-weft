@@ -1,6 +1,5 @@
 // article.weft
 
-@JSON
 struct Article {
     var id: string
     var title: string

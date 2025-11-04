@@ -1,0 +1,81 @@
+// ArticleListViewModel.weft
+
+import WPRepository
+import CacheService
+import Article
+
+@Observable
+@ViewModel
+@ViewScoped
+class ArticleListViewModel {
+    private var repository: WPRepository
+    private var cacheService: CacheService
+
+    @State var articles: [Article] = []
+    @State var isLoading: bool = false
+    @State var errorMessage: string? = null
+
+    init(repository: WPRepository, cacheService: CacheService) {
+        this.repository = repository
+        this.cacheService = cacheService
+    }
+
+    @Instruction('''
+    ArticleListViewModel coordinates between the Repository and the View.
+
+    Responsibilities:
+    - Fetch articles from repository
+    - Manage loading and error states for the view
+    - Transform repository data into presentation-ready state
+    - Cache articles when they're viewed/loaded
+    - Provide clean API for view interactions
+    ''')
+
+    func loadArticles(offset: int? = null) async {
+        isLoading = true
+        errorMessage = null
+
+        try {
+            await repository.fetchArticles(offset: offset)
+            articles = repository.articles
+
+            // Cache all loaded articles for offline access
+            await this.cacheLoadedArticles()
+
+        } catch error {
+            errorMessage = error.localizedDescription
+        }
+
+        isLoading = false
+    }
+
+    func refresh() async {
+        await this.loadArticles()
+    }
+
+    func cacheArticle(article: Article) async {
+        try {
+            await cacheService.cacheArticle(article)
+        } catch error {
+            // Log error but don't show to user - caching is background operation
+            @SumFunc
+            => log caching error for debugging
+        }
+    }
+
+    private func cacheLoadedArticles() async {
+        for article in articles {
+            await this.cacheArticle(article)
+        }
+    }
+
+    // Computed property for view to check if there are articles
+    var hasArticles: bool {
+        return !articles.isEmpty
+    }
+
+    // Computed property for error display
+    var hasError: bool {
+        return errorMessage != null
+    }
+}

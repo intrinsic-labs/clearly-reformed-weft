@@ -1,11 +1,9 @@
 // episode.weft
 
-import Podcast
-
 @JSON
 data EpisodeDTO {
     var id: string
-    var podcast: Podcast
+    var podcastId: string
     var title: string
     var description: string
     var duration: int

@@ -1,0 +1,44 @@
+// cachedVideo.weft
+
+@Schema
+struct CachedVideo {
+    @Id
+    var id: string
+
+    var title: string
+    var description: string
+    var content: string
+    var youtubeUrl: url
+    var date: date
+
+    @Nullable
+    var posterImageId: string?
+
+    @Nullable
+    var hoverGifId: string?
+
+    @Nullable
+    var videoBackgroundColor: string?
+
+    // Cache metadata
+    var cachedAt: datetime
+    var lastUpdated: datetime
+
+    @Instruction('''
+    CachedVideo stores the full video metadata for offline access.
+
+    This is separate from the Bookmark schema to allow:
+    1. Independent cache management (refresh, pruning, size limits)
+    2. Single source of truth for offline content
+    3. Bookmarks to reference cached videos by ID
+    4. Cache to be shared across features (bookmarks, recently viewed, etc.)
+
+    Note: This stores video metadata and YouTube URL, not the actual video file.
+    Actual video playback still requires internet connection via YouTube embed.
+    The cache allows users to browse video details, read descriptions, and
+    see thumbnails while offline.
+
+    When a video is bookmarked or viewed, it should be saved to this cache.
+    The cache can be refreshed independently without affecting bookmark metadata.
+    ''')
+}

@@ -1,0 +1,37 @@
+// cachedArticle.weft
+
+@Schema
+struct CachedArticle {
+    @Id
+    var id: string
+
+    var title: string
+    var excerpt: string
+    var url: url
+    var coverImage: url
+    var date: date
+
+    // Full rendered HTML content for offline reading
+    var renderedContent: string
+
+    // Optional source URL for republished articles
+    @Nullable
+    var sourceUrl: url?
+
+    // Cache metadata
+    var cachedAt: datetime
+    var lastUpdated: datetime
+
+    @Instruction('''
+    CachedArticle stores the full article content for offline access.
+
+    This is separate from the Bookmark schema to allow:
+    1. Independent cache management (refresh, pruning, size limits)
+    2. Single source of truth for offline content
+    3. Bookmarks to reference cached content by ID
+    4. Cache to be shared across features (bookmarks, recently viewed, etc.)
+
+    When an article is bookmarked or viewed, it should be saved to this cache.
+    The cache can be refreshed independently without affecting bookmark metadata.
+    ''')
+}

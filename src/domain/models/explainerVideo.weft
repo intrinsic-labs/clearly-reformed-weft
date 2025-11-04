@@ -1,8 +1,5 @@
 // explainerVideo.weft
 
-import ExplainerVideo as ExplainerVideoDTO
-
-@JSON
 struct ExplainerVideo {
     var id: string
     var title: string

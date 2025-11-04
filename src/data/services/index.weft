@@ -1,1 +1,20 @@
 @Index('services')
+
+// Services provide business logic and utility functions
+
+export CacheService from './cacheService'
+export WPHelper from './wpHelper'
+export ENDPOINTS from './endpoints'
+
+@Instruction('''
+Services in the data layer handle:
+- Business logic that doesn't belong in repositories
+- Utility functions for data operations
+- Cross-cutting concerns like caching
+
+CacheService: Manages offline content storage and retrieval
+WPHelper: WordPress-specific utility functions (media fetching, etc.)
+ENDPOINTS: API endpoint constants
+
+Services are typically @Singleton and can be injected into repositories or ViewModels.
+''')
