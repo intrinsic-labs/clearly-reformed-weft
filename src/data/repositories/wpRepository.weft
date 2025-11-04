@@ -1,5 +1,7 @@
-// wpengine.weft
+// wpRepository.weft
 
+import ArticleListItem
+import ArticleDetail
 import ExplainerVideo
 import Article
 import ENDPOINTS
@@ -24,12 +26,14 @@ class WPRepository {
       loadingArticles = true
 
       @SumFunc
-      => recursively fetch all articles from ENDPOINTS.ARTICLES.
-         follow the instructions in the ENDPOINTS definition to
-         compare .ARTICLES with .POSTS to get full article content
-         for *only* posts that are listed with the articles
-      => parse into Article objects
-      => load self.articles with all the articles that come back
+      => fetch article list summaries from ENDPOINTS.ARTICLES (/cr/v1/articles)
+         which returns ArticleListItem DTOs
+      => for each ArticleListItem, extract the slug from the url field
+      => fetch full article content using ENDPOINTS.POSTS with the slug
+         which returns ArticleDetail DTOs
+      => only include articles that appear in the custom /cr/v1/articles endpoint
+      => map ArticleListItem + ArticleDetail DTOs into unified Article domain models
+      => load self.articles with all the Article objects
       => if there's an error, update self.error with it
 
       loadingArticles = false
@@ -39,9 +43,10 @@ class WPRepository {
       loadingVideos = true
 
       @SumFunc
-      => recursively fetch all explainer videos from ENDPOINTS.VIDEOS
-      => parse into ExplainerVideo objects
-      => load self.videos with all the videos
+      => fetch explainer videos from ENDPOINTS.VIDEOS (/wp/v2/explainer-video)
+         which returns ExplainerVideo DTOs from backend/models/dto
+      => map ExplainerVideo DTOs into ExplainerVideo domain models
+      => load self.videos with all the ExplainerVideo objects
       => if there's an error, update self.error with it
 
       loadingVideos = false

@@ -3,7 +3,7 @@
 import Podcast
 
 @JSON
-data Episode {
+data EpisodeDTO {
     var id: string
     var podcast: Podcast
     var title: string

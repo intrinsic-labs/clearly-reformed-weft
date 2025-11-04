@@ -1,0 +1,3 @@
+// article.weft
+// DEPRECATED: Use ArticleListItem for list responses and ArticleDetail for full article content
+// This file is kept for reference only and should be removed once all references are updated

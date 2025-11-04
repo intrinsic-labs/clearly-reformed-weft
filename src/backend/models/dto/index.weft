@@ -1,5 +1,0 @@
-@Index('dto')
-
-All objects in the dto directory should be encodable and decodable from incoming JSON data.
-
-

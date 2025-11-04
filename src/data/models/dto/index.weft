@@ -1,0 +1,10 @@
+@Index('dto')
+
+All objects in the dto directory should be encodable and decodable from incoming JSON data.
+
+DTOs are organized by content type:
+- ArticleListItem: Lightweight summary from /cr/v1/articles endpoint
+- ArticleDetail: Full article content from /wp/v2/posts endpoint
+- ExplainerVideo: Full video content from /wp/v2/explainer-video endpoint
+- Episode: Podcast episode from RSS feed
+- ArticleCategory: Article category metadata

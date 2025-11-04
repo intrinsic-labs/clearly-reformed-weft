@@ -1,0 +1,44 @@
+// explainerVideo.weft
+
+@JSON
+data ExplainerVideoDTO {
+    var id: string
+
+    @JSONKey("title.rendered")
+    var title: string
+
+    @JSONKey("acf.display_date")
+    var date: date
+
+    @JSONKey("excerpt.rendered")
+    var excerpt: string
+
+    @JSONKey("content.rendered")
+    var content: string
+
+    @JSONKey("acf.video_embed")
+    var youtubeUrl: url
+
+    @JSONKey("featured_media")
+    var featuredMedia: string
+
+    @Instruction('''
+    ExplainerVideo DTO represents a single video from the /wp/v2/explainer-video endpoint.
+    This endpoint returns full video objects with all details needed for display.
+
+    The API response includes many other fields (SEO data, metadata, etc.) which are ignored.
+    Only the fields mapped above are extracted and used by the domain layer.
+
+    To fetch the featured image, use the featured_media ID to query the /wp/v2/media endpoint
+    separately, or include _embed=true in the request to embed media data.
+
+    Fields extracted:
+    - id: Unique identifier
+    - title.rendered: Video title (nested in WordPress response)
+    - date: Publication date (from acf.display_date in custom format YYYYMMDD)
+    - excerpt.rendered: Short description (nested in WordPress response)
+    - content.rendered: Full video description/content (HTML)
+    - youtubeUrl: from acf.video_embed (YouTube URL)
+    - featured_media: Media ID for the featured image/thumbnail
+    ''')
+}

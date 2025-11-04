@@ -1,0 +1,15 @@
+// articleListItem.weft
+
+@JSON
+data ArticleListItemDTO
+    var title: string
+    var date: string // formatted string like "October 30, 2025"
+    var excerpt: string
+    var url: url
+    var featuredImageUrl: url
+
+    @JSONKey("mobile_featured_image")
+    var mobileFeauturedImage: url | null
+
+    var hasBooklet: bool
+}

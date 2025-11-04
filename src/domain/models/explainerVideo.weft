@@ -1,0 +1,40 @@
+// explainerVideo.weft
+
+import ExplainerVideo as ExplainerVideoDTO
+
+@JSON
+struct ExplainerVideo {
+    var id: string
+    var title: string
+    var description: string
+    var content: string
+    var youtubeUrl: url
+    var date: date
+    var posterImageId: string?
+    var hoverGifId: string?
+    var videoBackgroundColor: string?
+
+    @Instruction('''
+    This domain model represents an explainer video.
+
+    It is mapped from the ExplainerVideoDTO which comes from the WordPress REST API.
+    The DTO contains all the raw API data, while this model contains only the
+    business-relevant fields needed by the application.
+
+    Mapping from DTO:
+    - title: from dto.title
+    - description: from dto.renderedExcerpt (short form)
+    - content: from dto.renderedContent (full HTML content)
+    - youtubeUrl: from dto.youtubeUrl
+    - date: from dto.date
+    - posterImageId: from dto.posterImageId (optional)
+    - hoverGifId: from dto.hoverGifId (optional)
+    - videoBackgroundColor: from dto.videoBackgroundColor (optional)
+    ''')
+
+    func getDurationEstimate() => string {
+        @SumFunc
+        => calculate approximate video duration from youtube url
+        => return duration as a formatted string (e.g., "12 min")
+    }
+}

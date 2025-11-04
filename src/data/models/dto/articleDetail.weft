@@ -1,0 +1,29 @@
+// articleDetail.weft
+
+@JSON
+data ArticleDetailDTO {
+    let id: string
+    let slug: string
+    let link: url
+
+    @JSONKey("title.rendered")
+    let title: string
+
+    @JSONKey("content.rendered")
+    let content: string
+
+    @JSONKey("excerpt.rendered")
+    let excerpt: string
+
+    let date: date
+    let featured_media: int
+
+    @JSONKey("acf.source_url")
+    let sourceUrl: url
+
+    @JSONKey("acf.display_date")
+    let displayDate: string
+
+    let categories: [int]
+    let tags: [int]
+}

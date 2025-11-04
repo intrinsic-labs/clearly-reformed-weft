@@ -1,0 +1,43 @@
+// article.weft
+
+@JSON
+struct Article {
+    var id: string
+    var title: string
+    var excerpt: string
+    var date: date
+    var url: url
+    var coverImage: url
+
+    // Full rendered HTML content - populated when full article is fetched
+    var renderedContent: string?
+
+    // Optional source URL for republished articles
+    var sourceUrl: url?
+
+    @Instruction('''
+    This domain model represents an Article at the presentation layer.
+
+    It combines data from two DTO sources:
+    1. ArticleListItem DTO - from /cr/v1/articles endpoint (lightweight list data)
+       - Provides: title, date, excerpt, url, featured_image_url, mobile_featured_image, has_booklet
+    2. ArticleDetail DTO - from /wp/v2/posts endpoint (full article content)
+       - Provides: id, slug, content.rendered, acf.source_url
+
+    The Repository layer is responsible for:
+    1. Fetching the list from ArticleListItem endpoint
+    2. Extracting the slug from the URL
+    3. Fetching full ArticleDetail using the slug
+    4. Mapping both DTOs into this unified Article model
+
+    Property Mapping:
+    - id: from ArticleDetail.id
+    - title: from ArticleListItem.title (or ArticleDetail.title)
+    - excerpt: from ArticleListItem.excerpt (plain text, not HTML)
+    - date: from ArticleListItem.date (parsed from formatted string)
+    - url: from ArticleListItem.url
+    - coverImage: from ArticleListItem.featured_image_url (or mobile_featured_image if available)
+    - renderedContent: from ArticleDetail.content.rendered (full HTML content)
+    - sourceUrl: from ArticleDetail.acf.source_url (optional, for republished content)
+    ''')
+}
